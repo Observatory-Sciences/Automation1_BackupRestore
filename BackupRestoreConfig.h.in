@@ -1,0 +1,3 @@
+// the configured options and settings for BackupRestore
+#define BackupRestore_VERSION_MAJOR @BackupRestore_VERSION_MAJOR@
+#define BackupRestore_VERSION_MINOR @BackupRestore_VERSION_MINOR@

@@ -1,0 +1,2 @@
+/usr/bin/ar qc libsrc.a  CMakeFiles/src.dir/backuprestore.cxx.o
+/usr/bin/ranlib libsrc.a
