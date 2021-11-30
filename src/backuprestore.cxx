@@ -249,20 +249,55 @@ bool areWeConnected(Automation1Controller controller)
     }
 }
 
-// TODO: Put backup API call in here.
+// Asks user a yes/no question and retrieves the answer.
+bool getUserChoice(std::string requestToUser)
+{
+    std::string strInput;
+    while(true)
+    {
+        std::cout << requestToUser << " (y/n)" << std::endl;
+        strInput = readline(">>> ");
+        if(strInput == "y")
+        {
+            return true;
+        }
+        else if(strInput == "n")
+        {
+            return false;
+        }
+        else
+        {
+            std::cout << "Please respond with either y or n." << std::endl;
+        }
+    }
+
+}
+
 // Downloads the connected controller's MCD configuration file.
 bool backup(std::vector<std::string> args, Automation1Controller* controller)
 {
     bool ret;
+    bool incFiles = false;
+    bool incConfig = false;
     std::string fnMCDBackupLocation = args[1];                                    // Path to download MCD file to.
-    ret = true; //Automation1_DownloadMCD();  // <-- API call goes here.
+
+    // Ask user if they want to include files/config in backup.
+    incFiles = getUserChoice("Include all files in the backup?");
+    if(incFiles) std::cout << "Including all files in backup.\n" << std::endl;
+    else std::cout << "Not including files in backup.\n" << std::endl;
+
+    incConfig = getUserChoice("Include all configuration settings in the backup?");
+    if(incConfig) std::cout << "Including all configuration settings in backup.\n" << std::endl;
+    else std::cout << "Not including configuration settings in backup.\n" << std::endl;
+
+    ret = Automation1_Controller_DownloadMcdToFile(*controller, fnMCDBackupLocation.c_str(), incFiles, incConfig);
     if(!ret)
     {
-        logError(std::string("Failed to create backup at: "+fnMCDBackupLocation));
+        logError(std::string("Failed to download MCD to: "+fnMCDBackupLocation));
     }
     else
     {
-        std::cout << "Creating MCD backup at: " << fnMCDBackupLocation << std::endl;
+        std::cout << "Downloading MCD backup to: " << fnMCDBackupLocation << std::endl;
     }
     return ret;
 }
@@ -272,15 +307,32 @@ bool backup(std::vector<std::string> args, Automation1Controller* controller)
 bool restore(std::vector<std::string> args, Automation1Controller* controller)
 {
     bool ret;
+    bool incFiles = false;
+    bool incConfig = false;
+    bool eraseController = false;
     std::string fnMCDRestoreLocation = args[1];                                    // Path from which to restore MCD file.
-    ret = true; //Automation1_UploadMCD();  // <-- API call goes here.
+
+    // Ask user if they want to include files/config in backup.
+    incFiles = getUserChoice("Include all files in the upload?");
+    if(incFiles) std::cout << "Including all files in upload.\n" << std::endl;
+    else std::cout << "Not including files in upload.\n" << std::endl;
+
+    incConfig = getUserChoice("Include all configuration settings in the upload?");
+    if(incConfig) std::cout << "Including all configuration settings in upload.\n" << std::endl;
+    else std::cout << "Not including configuration settings in upload.\n" << std::endl;
+
+    eraseController = getUserChoice("Erase controller before uploading MCD?");
+    if(eraseController) std::cout << "Erasing controller before upload.\n" << std::endl;
+    else std::cout << "Not erasing controller before upload.\n" << std::endl;
+
+    ret = Automation1_Controller_UploadMcdToController(*controller, fnMCDRestoreLocation.c_str(), incFiles, incConfig, eraseController);
     if(!ret)
     {
-        logError(std::string("Failed to restore controller settings from: "+fnMCDRestoreLocation));
+        logError(std::string("Failed to upload MCD from: "+fnMCDRestoreLocation));
     }
     else
     {
-        std::cout << "Restoring controller settings from: " << fnMCDRestoreLocation << std::endl;
+        std::cout << "Uploading MCD from: " << fnMCDRestoreLocation << std::endl;
     }
     return ret;
 }

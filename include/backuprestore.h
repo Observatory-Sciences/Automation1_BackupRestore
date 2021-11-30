@@ -28,4 +28,16 @@ bool areWeConnected(Automation1Controller controller);
 bool backup(std::vector<std::string> args, Automation1Controller* controller);
 bool restore(std::vector<std::string> args, Automation1Controller* controller);
 void logError(std::string programErrorMessage);
+bool getUserChoice(std::string requestToUser);
 
+
+// Headers and a dummy implementation of the backup and restore functions.
+// TODO: Remove these once the real functions are implemented.
+AUTOMATION1_CAPI bool Automation1_Controller_DownloadMcdToFile(Automation1Controller controller, const char* localMcdFilePath, bool shouldIncludeFiles, bool shouldIncludeConfiguration)
+{
+    return true;
+}
+AUTOMATION1_CAPI bool Automation1_Controller_UploadMcdToController(Automation1Controller controller, const char* localMcdFilePath, bool shouldIncludeFiles, bool shouldIncludeConfiguration, bool eraseController)
+{
+    return true;
+}
