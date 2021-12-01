@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/BackupRestore.dir/src/backuprestore.cxx.o  -o ../BackupRestore   -L/home/ajc/Aerotech/BackupRestore/lib  -Wl,-rpath,/home/ajc/Aerotech/BackupRestore/lib: -lautomation1c -lautomation1compiler -lreadline src/libsrc.a 
