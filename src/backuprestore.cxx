@@ -163,8 +163,8 @@ void populate_cmd_list(std::map<std::string,std::string, case_insensitive_map::c
 {//The commands listed here as keys must contain the same characters as those used for command comparisons later. A mismatch will prevent the cmd being properly run.
         *cmd_list =      { 
                                 {"GetApi","Usage: getapi -> Prints the current version of the Aerotech C API."},
-                                {"Connect", "Usage: connect <params> -> Connects to the controller."},
-                                {"Disconnect","Usage: disconnect -> Disconnects from the controller."},
+                                {"Connect", "Usage: connect <ip> -> Connects to the controller at the specified IP address."},
+                                {"Disconnect","Usage: disconnect -> Disconnects from the currently connected controller."},
                                 {"Exit","Usage: exit -> Exit this program."},
                                 {"Help","Usage: help -> Prints this help."},
                                 {"Backup","Usage: backup <PATH> -> Downloads the MCD configuration file for the currently connected controller to the location specified by <PATH>."},
