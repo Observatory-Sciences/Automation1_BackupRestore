@@ -33,6 +33,7 @@ int main(int argc, char* argv[])
 
     // report version
     std::cout << argv[0] << " Version " << BackupRestore_VERSION_MAJOR << "." << BackupRestore_VERSION_MINOR << std::endl;
+    send_help(cmd_list);
     while(true)
     {
         std::cout << "\nEnter a command (or \"exit\" to exit or \"help\" for a list of commands)" << std::endl;
